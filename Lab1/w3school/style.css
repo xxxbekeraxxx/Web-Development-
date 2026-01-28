@@ -1,0 +1,28 @@
+body {
+    background-color: powderblue;
+}
+
+h3 {
+    background-color: blueviolet;
+    text-align: center;
+}
+
+strong {
+    color: red;
+    display: block;
+    text-align: center;
+}
+p{
+    border: 23px solid powderblue;
+    padding:30px;
+    text-align: center;
+}
+h4{
+    border: 3px solid orange;
+    margin: 100px;
+    padding: 34px;
+    text-align:center;
+    color: black;
+    background-color:palegoldenrod;
+    font-size: xxx-large;
+}
