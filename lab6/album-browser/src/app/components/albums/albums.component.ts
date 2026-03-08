@@ -9,32 +9,35 @@ import { Album } from '../../models/album.model';
   standalone: true,
   imports: [CommonModule, RouterLink],
   template: `
-    <h2>Albums</h2>
-    <div *ngIf="loading">Loading...</div>
-    <ul>
-      <li *ngFor="let album of albums">
-        <a [routerLink]="['/albums', album.id]">{{ album.id }}. {{ album.title }}</a>
-        <button (click)="deleteAlbum(album.id)">Delete</button>
-      </li>
-    </ul>
-  `,
-  styles: [`
-    ul { list-style: none; padding: 0; }
-    li { margin: 10px 0; padding: 10px; border: 1px solid #ddd; display: flex; justify-content: space-between; }
-    a { text-decoration: none; color: #007bff; }
-    button { background: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer; }
-  `]
+    <div style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
+      <h2>Albums</h2>
+      <div *ngIf="albums.length === 0">Loading albums...</div>
+      <ul style="list-style: none; padding: 0;">
+        <li *ngFor="let album of albums" style="margin: 10px 0; padding: 10px; border: 1px solid #ddd; display: flex; justify-content: space-between;">
+          <a [routerLink]="['/albums', album.id]" style="text-decoration: none; color: #007bff;">{{ album.id }}. {{ album.title }}</a>
+          <button (click)="deleteAlbum(album.id)" style="background: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer;">Delete</button>
+        </li>
+      </ul>
+    </div>
+  `
 })
 export class AlbumsComponent implements OnInit {
   albums: Album[] = [];
-  loading = true;
 
-  constructor(private albumService: AlbumService) {}
+  constructor(private albumService: AlbumService) {
+    console.log('AlbumsComponent created');
+  }
 
   ngOnInit(): void {
-    this.albumService.getAlbums().subscribe(data => {
-      this.albums = data;
-      this.loading = false;
+    console.log('AlbumsComponent loading albums...');
+    this.albumService.getAlbums().subscribe({
+      next: (data) => {
+        console.log('Albums loaded:', data);
+        this.albums = data;
+      },
+      error: (error) => {
+        console.error('Error loading albums:', error);
+      }
     });
   }
 

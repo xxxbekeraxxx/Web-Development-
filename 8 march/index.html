@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>8 Наурыз – Алтынай және Аяжан</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 30% 10%, #2d0f23, #12070f 90%);
+      font-family: 'Segoe UI', 'Montserrat', 'Quicksand', system-ui, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      touch-action: none; /* precise control, gestures handled by js */
+    }
+
+    /* sophisticated canvas stack */
+    #canvas-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    #canvas-interactive {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    /* main card — advanced glassmorphism + dynamic glow */
+    .card {
+      position: relative;
+      z-index: 25;
+      width: 88%;
+      max-width: 520px;
+      background: rgba(25, 10, 18, 0.28);
+      backdrop-filter: blur(24px) saturate(300%);
+      -webkit-backdrop-filter: blur(24px) saturate(300%);
+      border-radius: 64px 24px 64px 24px;
+      border: 1px solid rgba(255, 160, 210, 0.35);
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 0 0 0 2px rgba(255, 140, 200, 0.25) inset, 0 0 60px #b24b7a;
+      padding: 2.5rem 1.8rem 2.8rem;
+      margin: 16px;
+      transform: translateY(0);
+      transition: box-shadow 0.4s ease, border-color 0.3s;
+      animation: borderPulse 5s infinite alternate;
+    }
+
+    @keyframes borderPulse {
+      0% { border-color: rgba(255, 160, 210, 0.3); box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 0 0 0 2px rgba(255, 140, 200, 0.25) inset, 0 0 60px #b24b7a; }
+      100% { border-color: rgba(255, 220, 250, 0.7); box-shadow: 0 40px 100px rgba(156, 39, 106, 0.9), 0 0 0 4px rgba(255, 200, 240, 0.6) inset, 0 0 100px #ff80bf; }
+    }
+
+    /* intro overlay with angular-style animation */
+    .intro-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(145deg, #1e0a14 0%, #3f1a2e 70%, #802d5a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+      transition: clip-path 1.8s cubic-bezier(0.64, 0, 0.35, 1), opacity 1.2s;
+      clip-path: circle(150% at 50% 50%);
+      opacity: 1;
+    }
+
+    .intro-hidden {
+      clip-path: circle(0% at 50% 50%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .intro-text {
+      font-size: clamp(3.8rem, 20vw, 7rem);
+      font-weight: 900;
+      letter-spacing: 10px;
+      background: linear-gradient(135deg, #ffe6f2, #ffb8da);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 40px #ff70b0, 0 0 120px #c13f7a;
+      animation: flicker 3s infinite alternate;
+      transform: scale(1);
+    }
+
+    @keyframes flicker {
+      0% { text-shadow: 0 0 30px #ff80b8, 0 0 80px #ff3388; opacity: 0.95; }
+      100% { text-shadow: 0 0 70px #ffaad5, 0 0 160px #ff66b0; opacity: 1; }
+    }
+
+    /* names — only Алтынай & Аяжан, no extra text */
+    .names {
+      font-size: 3.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: center;
+      color: #ffd5ec;
+      margin: 0.8rem 0 1.6rem;
+      filter: drop-shadow(0 0 25px #ff90ca);
+      letter-spacing: 4px;
+    }
+
+    .names span {
+      display: block;
+      font-size: 2.8rem;
+      font-weight: 500;
+      margin-top: 0.35rem;
+      color: #ffe1f0;
+    }
+
+    /* surprise button — extremely refined */
+    .surprise-btn {
+      background: rgba(20, 5, 12, 0.35);
+      backdrop-filter: blur(30px);
+      border: 2px solid rgba(255, 140, 200, 0.9);
+      padding: 1.3rem 2rem;
+      border-radius: 100px;
+      font-size: 1.9rem;
+      font-weight: 600;
+      color: #fff0fb;
+      text-shadow: 0 0 25px #ff4f9a;
+      letter-spacing: 3px;
+      margin: 30px 0 25px;
+      cursor: pointer;
+      box-shadow: 0 0 50px #ff3f8c, 0 10px 30px rgba(0,0,0,0.6);
+      transition: transform 0.2s cubic-bezier(0.34, 1.8, 0.64, 1), background 0.2s, box-shadow 0.3s;
+      width: 100%;
+      outline: none;
+      touch-action: manipulation;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .surprise-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 200, 240, 0.4), transparent);
+      transition: left 0.7s;
+    }
+
+    .surprise-btn:active::before {
+      left: 100%;
+    }
+
+    .surprise-btn:active {
+      transform: scale(0.92);
+      background: rgba(180, 70, 130, 0.5);
+      box-shadow: 0 0 90px #ff80c0;
+    }
+
+    /* message box — only Kazakh */
+    .message-box {
+      margin: 30px 0 18px;
+      padding: 26px 18px;
+      background: rgba(18, 5, 12, 0.5);
+      backdrop-filter: blur(28px);
+      border-radius: 48px 16px 48px 16px;
+      border: 1px solid rgba(255, 170, 220, 0.45);
+      color: #ffe2f2;
+      font-size: 1.3rem;
+      line-height: 1.7;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(140, 0, 100, 0.6);
+      opacity: 0;
+      transform: translateY(50px) scale(0.92);
+      transition: opacity 0.8s ease, transform 0.9s cubic-bezier(0.34, 1.5, 0.64, 1);
+      pointer-events: none;
+      white-space: pre-line;
+      font-weight: 400;
+      word-break: break-word;
+      border-left: 6px solid #ff9acb;
+    }
+
+    .message-box.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .signature {
+      margin-top: 28px;
+      font-size: 2.2rem;
+      font-weight: 300;
+      text-align: right;
+      color: #ffd4ea;
+      text-shadow: 0 0 20px #ff96c7;
+      border-top: 3px dotted #ff80b5;
+      padding-top: 18px;
+      opacity: 0;
+      transition: opacity 1.2s;
+      letter-spacing: 2px;
+    }
+
+    /* audio toggle — minimalist but glowing */
+    .audio-toggle {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(30, 8, 18, 0.45);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 200, 235, 0.8);
+      font-size: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffe5f5;
+      cursor: pointer;
+      z-index: 350;
+      box-shadow: 0 0 50px #ff70b8;
+      transition: 0.2s;
+      touch-action: manipulation;
+    }
+
+    .audio-toggle:active {
+      transform: scale(0.85);
+      background: #ff9acb;
+      color: #2a0b1a;
+    }
+
+    /* advanced cursor effect */
+    .cursor-custom {
+      width: 10px; height: 10px;
+      background: #ffb8da;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000;
+      mix-blend-mode: screen;
+      transition: transform 0.1s;
+      box-shadow: 0 0 30px #ff69b4;
+    }
+
+    /* falling flower petals and sparks will be drawn on canvas */
+  </style>
+</head>
+<body>
+
+  <!-- INTRO (only Kazakh) -->
+  <div id="introOverlay" class="intro-overlay">
+    <div class="intro-text">8 Наурыз</div>
+  </div>
+
+  <!-- CANVAS layers for advanced particle effects -->
+  <canvas id="canvas-particles"></canvas>
+  <canvas id="canvas-interactive"></canvas>
+
+  <!-- AUDIO control with dummy (but functional for UX) -->
+  <div class="audio-toggle" id="audioControl">⚡</div>
+  <audio id="bgAudio" loop preload="auto" style="display: none;">
+    <source src="data:audio/wav;base64,UklGRlwAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YVoAAACQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkA==" type="audio/wav">
+  </audio>
+
+  <!-- MAIN CARD -->
+  <div class="card">
+    <!-- pure names, no 'ана' or 'апай' -->
+    <div class="names">
+      Алтынай
+      <span>Аяжан</span>
+    </div>
+
+    <button class="surprise-btn" id="magicBtn">✨ Сиқыр ашу ✨</button>
+
+    <!-- message box in Kazakh (translated) -->
+    <div id="heartfeltMessage" class="message-box">
+      <span id="typingMessage"></span>
+      <span class="cursor-blink" id="cursor">|</span>
+    </div>
+
+    <div class="signature" id="signatureLine">— Ералы ❤️</div>
+  </div>
+
+  <script>
+    (function() {
+      // ---------- КОНФИГУРАЦИЯ (advanced) ----------
+      const intro = document.getElementById('introOverlay');
+      const magicBtn = document.getElementById('magicBtn');
+      const messageDiv = document.getElementById('heartfeltMessage');
+      const typingSpan = document.getElementById('typingMessage');
+      const cursorSpan = document.getElementById('cursor');
+      const signature = document.getElementById('signatureLine');
+      const audio = document.getElementById('bgAudio');
+      const audioCtrl = document.getElementById('audioControl');
+
+      // Қазақша жүрекжарды хат (only Kazakh)
+      const fullMessageKZ = `Құрметті анашым Алтынай және менің сүйікті сіңлім Аяжан!\nСіздерді 8 Наурыз мерекесімен шын жүректен құттықтаймын.\nКүтімдеріңіз, қолдауларыңыз және махаббаттарыңыз үшін рахмет.\nСіздер — менің өмірімдегі ең маңызды әйелдер.\nМен сіздерді өте жақсы көремін.`;
+
+      let animationTriggered = false;
+      let audioPlaying = false;
+
+      // ---------- INTRO animation (more advanced) ----------
+      setTimeout(() => {
+        intro.classList.add('intro-hidden');
+      }, 2000); // disappears after 2s
+
+      // ---------- AUDIO dummy toggle (just visual) ----------
+      audioCtrl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (audio.paused) {
+          audio.play().catch(() => {}); // will fail gracefully, but we show state
+          audioPlaying = true;
+          audioCtrl.innerText = '🔇';
+        } else {
+          audio.pause();
+          audioPlaying = false;
+          audioCtrl.innerText = '⚡';
+        }
+      });
+
+      // ---------- ADVANCED CANVAS SYSTEM (particles + interactive) ----------
+      const pCanvas = document.getElementById('canvas-particles');
+      const iCanvas = document.getElementById('canvas-interactive');
+      let pCtx = pCanvas.getContext('2d');
+      let iCtx = iCanvas.getContext('2d');
+      let width, height;
+
+      function resizeCanvases() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        pCanvas.width = width;
+        pCanvas.height = height;
+        iCanvas.width = width;
+        iCanvas.height = height;
+      }
+      window.addEventListener('resize', resizeCanvases);
+      resizeCanvases();
+
+      // ---------- FLoating petals (more advanced: parametric petals) ----------
+      const petalCount = 45;
+      let petals = [];
+
+      function initPetals() {
+        for (let i = 0; i < petalCount; i++) {
+          petals.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            size: 8 + Math.random() * 22,
+            speedY: 0.12 + Math.random() * 0.9,
+            speedX: -0.2 + Math.random() * 0.5,
+            rot: Math.random() * 360,
+            rotSpeed: (Math.random() - 0.5) * 0.03,
+            opacity: 0.45 + Math.random() * 0.5,
+            color: `rgba(255, ${150 + Math.floor(70 * Math.random())}, ${190 + Math.floor(65 * Math.random())}, 0.5)`,
+            wave: Math.random() * 6,
+          });
+        }
+      }
+      initPetals();
+
+      function drawPetals() {
+        pCtx.clearRect(0, 0, width, height);
+        for (let p of petals) {
+          pCtx.save();
+          pCtx.translate(p.x + Math.sin(Date.now() * 0.002 + p.wave) * 1.5, p.y);
+          pCtx.rotate((p.rot * Math.PI) / 180);
+          pCtx.beginPath();
+          pCtx.fillStyle = p.color;
+          pCtx.shadowColor = '#ffa8d0';
+          pCtx.shadowBlur = 22;
+          // elongated petal shape
+          pCtx.ellipse(0, 0, p.size * 0.7, p.size * 0.3, 0, 0, Math.PI * 2);
+          pCtx.fill();
+          pCtx.restore();
+
+          p.x += p.speedX + Math.sin(Date.now() * 0.0015) * 0.1;
+          p.y += p.speedY;
+          p.rot += p.rotSpeed;
+
+          if (p.y > height + 40) p.y = -40;
+          if (p.x > width + 40) p.x = -40;
+          if (p.x < -40) p.x = width + 40;
+        }
+        requestAnimationFrame(drawPetals);
+      }
+      drawPetals();
+
+      // ---------- INTERACTIVE: HEARTS, CONFETTI, SPARKS (node-like event loop) ----------
+      class HeartSpark {
+        constructor(x, y) {
+          this.x = x; this.y = y;
+          this.vx = (Math.random() - 0.5) * 12;
+          this.vy = (Math.random() - 0.9) * 14 - 2;
+          this.size = 12 + Math.random() * 34;
+          this.opacity = 0.95;
+          this.life = 1.0;
+          this.gravity = 0.16;
+          this.hue = 320 + Math.random() * 40;
+        }
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          this.vy += this.gravity;
+          this.life -= 0.0065;
+          this.opacity = this.life;
+        }
+        draw(ctx) {
+          ctx.save();
+          ctx.globalAlpha = this.opacity * 0.9;
+          ctx.shadowBlur = 34;
+          ctx.shadowColor = `hsl(${this.hue}, 90%, 75%)`;
+          ctx.fillStyle = `hsl(${this.hue}, 85%, 70%)`;
+          ctx.font = `${this.size}px 'Segoe UI', 'Arial'`;
+          ctx.fillText('❤️', this.x, this.y);
+          ctx.restore();
+        }
+      }
+
+      class Sparkle {
+        constructor(x, y) {
+          this.x = x; this.y = y;
+          this.vx = (Math.random() - 0.5) * 7;
+          this.vy = (Math.random() - 1) * 12;
+          this.size = 3 + Math.random() * 14;
+          this.color = `rgba(255, ${200 + Math.random()*55}, 220, 0.9)`;
+          this.life = 1.0;
+        }
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          this.vy += 0.12;
+          this.life -= 0.008;
+        }
+        draw(ctx) {
+          ctx.save();
+          ctx.globalAlpha = this.life;
+          ctx.shadowBlur = 28;
+          ctx.shadowColor = '#ffb0d5';
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size * 0.5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      let interactiveFX = [];
+
+      function spawnExplosion(x, y) {
+        for (let i = 0; i < 40; i++) {
+          if (i % 3 === 0) interactiveFX.push(new HeartSpark(x, y));
+          else interactiveFX.push(new Sparkle(x, y));
+        }
+        // extra burst
+        for (let i = 0; i < 15; i++) {
+          setTimeout(() => {
+            interactiveFX.push(new HeartSpark(x + (Math.random()-0.5)*150, y + (Math.random()-0.5)*100));
+          }, i * 25);
+        }
+      }
+
+      // Mouse / touch interactive sparkles (always active)
+      function handleMove(e) {
+        let clientX, clientY;
+        if (e.touches) {
+          clientX = e.touches[0].clientX;
+          clientY = e.touches[0].clientY;
+          e.preventDefault();
+        } else {
+          clientX = e.clientX;
+          clientY = e.clientY;
+        }
+        if (Math.random() < 0.2) {
+          interactiveFX.push(new Sparkle(clientX, clientY));
+        }
+      }
+      document.addEventListener('mousemove', handleMove);
+      document.addEventListener('touchmove', handleMove, { passive: false });
+
+      // Surprise magic
+      magicBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (animationTriggered) return;
+        animationTriggered = true;
+
+        const rect = magicBtn.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        spawnExplosion(cx, cy);
+
+        // extra cascading effect
+        let count = 0;
+        const interval = setInterval(() => {
+          if (count++ > 12) clearInterval(interval);
+          spawnExplosion(Math.random() * width, Math.random() * height * 0.8);
+        }, 90);
+
+        // Show message after burst (Kazakh typing)
+        setTimeout(() => {
+          messageDiv.classList.add('visible');
+          let i = 0;
+          typingSpan.innerHTML = '';
+          cursorSpan.style.display = 'inline-block';
+          const typeInterval = setInterval(() => {
+            if (i < fullMessageKZ.length) {
+              typingSpan.innerHTML += fullMessageKZ.charAt(i) === '\n' ? '<br>' : fullMessageKZ.charAt(i);
+              i++;
+            } else {
+              clearInterval(typeInterval);
+              cursorSpan.style.display = 'none';
+            }
+          }, 42);
+
+          // signature appears
+          setTimeout(() => {
+            signature.style.opacity = '1';
+          }, 600);
+        }, 300);
+      });
+
+      // animate interactive canvas
+      function drawInteractive() {
+        iCtx.clearRect(0, 0, width, height);
+        for (let i = interactiveFX.length - 1; i >= 0; i--) {
+          let fx = interactiveFX[i];
+          fx.update();
+          fx.draw(iCtx);
+          if (fx.life <= 0.01 || fx.y > height + 100) {
+            interactiveFX.splice(i, 1);
+          }
+        }
+        requestAnimationFrame(drawInteractive);
+      }
+      drawInteractive();
+
+      // extra random hearts for atmosphere
+      setInterval(() => {
+        if (animationTriggered && Math.random() < 0.7) {
+          interactiveFX.push(new HeartSpark(Math.random() * width, Math.random() * height * 0.5));
+        } else if (Math.random() < 0.2) {
+          interactiveFX.push(new Sparkle(Math.random() * width, Math.random() * height));
+        }
+      }, 280);
+
+      // extra advanced: simulated node-like cursor effect (CSS)
+      const cursorDiv = document.createElement('div');
+      cursorDiv.classList.add('cursor-custom');
+      document.body.appendChild(cursorDiv);
+
+      document.addEventListener('mousemove', (e) => {
+        cursorDiv.style.transform = `translate(${e.clientX - 5}px, ${e.clientY - 5}px)`;
+      });
+      document.addEventListener('touchmove', (e) => {
+        if (e.touches[0]) {
+          cursorDiv.style.transform = `translate(${e.touches[0].clientX - 5}px, ${e.touches[0].clientY - 5}px)`;
+        }
+      }, { passive: true });
+
+      // remove intro on any tap (just in case)
+      intro.addEventListener('click', () => intro.classList.add('intro-hidden'));
+
+    })();
+  </script>
+</body>
+</html>

@@ -4,15 +4,12 @@ import { Component } from '@angular/core';
   selector: 'app-about',
   standalone: true,
   template: `
-    <div>
+    <div style="max-width: 800px; margin: 2rem auto; padding: 0 1rem;">
       <h2>About</h2>
       <p>Student: Your Name</p>
       <p>Course: Web Development</p>
       <p>Lab 6: Routing & HTTP</p>
     </div>
-  `,
-  styles: [`
-    div { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-  `]
+  `
 })
 export class AboutComponent {}

@@ -10,9 +10,12 @@ import { Photo } from '../models/photo.model';
 export class AlbumService {
   private apiUrl = 'https://jsonplaceholder.typicode.com';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    console.log('AlbumService created');
+  }
 
   getAlbums(): Observable<Album[]> {
+    console.log('Fetching albums from API...');
     return this.http.get<Album[]>(`${this.apiUrl}/albums`);
   }
 
