@@ -1,0 +1,87 @@
+[
+  {
+    "model": "api.category",
+    "pk": 1,
+    "fields": {"name": "Electronics", "slug": "electronics", "created_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.category",
+    "pk": 2,
+    "fields": {"name": "Fashion", "slug": "fashion", "created_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.category",
+    "pk": 3,
+    "fields": {"name": "Home & Kitchen", "slug": "home-kitchen", "created_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.category",
+    "pk": 4,
+    "fields": {"name": "Books", "slug": "books", "created_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.category",
+    "pk": 5,
+    "fields": {"name": "Sports", "slug": "sports", "created_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.product",
+    "pk": 1,
+    "fields": {"name": "Wireless Headphones", "price": "89.99", "description": "Noise-canceling Bluetooth headphones.", "count": 20, "is_active": true, "category": 1, "image_url": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e", "created_at": "2026-03-24T10:00:00Z", "updated_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.product",
+    "pk": 2,
+    "fields": {"name": "Smart Watch", "price": "129.99", "description": "Fitness tracking and notifications.", "count": 15, "is_active": true, "category": 1, "image_url": "https://images.unsplash.com/photo-1523275335684-37898b6baf30", "created_at": "2026-03-24T10:00:00Z", "updated_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.product",
+    "pk": 3,
+    "fields": {"name": "Running Shoes", "price": "74.50", "description": "Comfortable shoes for daily runs.", "count": 30, "is_active": true, "category": 2, "image_url": "https://images.unsplash.com/photo-1542291026-7eec264c27ff", "created_at": "2026-03-24T10:00:00Z", "updated_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.product",
+    "pk": 4,
+    "fields": {"name": "Classic Jacket", "price": "109.00", "description": "Lightweight jacket for cool weather.", "count": 10, "is_active": true, "category": 2, "image_url": "https://images.unsplash.com/photo-1551028719-00167b16eac5", "created_at": "2026-03-24T10:00:00Z", "updated_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.product",
+    "pk": 5,
+    "fields": {"name": "Coffee Maker", "price": "59.99", "description": "Automatic drip coffee machine.", "count": 12, "is_active": true, "category": 3, "image_url": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085", "created_at": "2026-03-24T10:00:00Z", "updated_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.product",
+    "pk": 6,
+    "fields": {"name": "Non-stick Pan Set", "price": "45.00", "description": "3-piece kitchen pan set.", "count": 18, "is_active": true, "category": 3, "image_url": "https://images.unsplash.com/photo-1584990347449-a9f95ea9f134", "created_at": "2026-03-24T10:00:00Z", "updated_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.product",
+    "pk": 7,
+    "fields": {"name": "Learn Django", "price": "29.95", "description": "Comprehensive guide to Django development.", "count": 40, "is_active": true, "category": 4, "image_url": "https://images.unsplash.com/photo-1512820790803-83ca734da794", "created_at": "2026-03-24T10:00:00Z", "updated_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.product",
+    "pk": 8,
+    "fields": {"name": "Angular in Action", "price": "34.50", "description": "Hands-on Angular cookbook.", "count": 25, "is_active": true, "category": 4, "image_url": "https://images.unsplash.com/photo-1497633762265-9d179a990aa6", "created_at": "2026-03-24T10:00:00Z", "updated_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.product",
+    "pk": 9,
+    "fields": {"name": "Yoga Mat", "price": "24.99", "description": "Non-slip mat for yoga and pilates.", "count": 50, "is_active": true, "category": 5, "image_url": "https://images.unsplash.com/photo-1518611012118-696072aa579a", "created_at": "2026-03-24T10:00:00Z", "updated_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.product",
+    "pk": 10,
+    "fields": {"name": "Dumbbell Set", "price": "69.99", "description": "Adjustable dumbbells for strength training.", "count": 14, "is_active": true, "category": 5, "image_url": "https://images.unsplash.com/photo-1517960413843-0aee8e2b3285", "created_at": "2026-03-24T10:00:00Z", "updated_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.product",
+    "pk": 11,
+    "fields": {"name": "Gaming Keyboard", "price": "99.99", "description": "Mechanical RGB keyboard.", "count": 8, "is_active": true, "category": 1, "image_url": "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae", "created_at": "2026-03-24T10:00:00Z", "updated_at": "2026-03-24T10:00:00Z"}
+  },
+  {
+    "model": "api.product",
+    "pk": 12,
+    "fields": {"name": "Desk Lamp", "price": "19.99", "description": "LED desk lamp with dimmer.", "count": 35, "is_active": true, "category": 3, "image_url": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c", "created_at": "2026-03-24T10:00:00Z", "updated_at": "2026-03-24T10:00:00Z"}
+  }
+]
