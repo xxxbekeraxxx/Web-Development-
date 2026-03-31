@@ -1,0 +1,2 @@
+.item { display:grid; grid-template-columns:2fr 100px 120px; gap:1rem; padding:0.75rem 0; border-bottom:1px solid #e5e7eb; align-items:center; }
+.totals { margin-top:1rem; }

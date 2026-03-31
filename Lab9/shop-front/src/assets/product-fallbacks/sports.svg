@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420">
+  <rect width="640" height="420" fill="#052e16"/>
+  <circle cx="320" cy="190" r="90" fill="#22c55e"/>
+  <path d="M260 190 h120 M320 130 v120 M276 146 l88 88 M364 146 l-88 88" stroke="#dcfce7" stroke-width="8"/>
+  <text x="320" y="360" text-anchor="middle" fill="#dcfce7" font-size="34" font-family="Arial">Sports</text>
+</svg>

@@ -1,0 +1,22 @@
+<div *ngIf="product" class="wrapper">
+  <nav class="crumbs"><a routerLink="/">Products</a> / {{ product.name }}</nav>
+  <section class="detail">
+    <img
+      [src]="getMainImage()"
+      [alt]="product.name"
+      (error)="useFallbackImage($event, product.category.slug)"
+    />
+    <div>
+      <p class="badge">{{ product.category.name }}</p>
+      <h1>{{ product.name }}</h1>
+      <p>{{ product.description }}</p>
+      <p class="price">{{ product.price | currency }}</p>
+      <label>Quantity <input type="number" min="1" [(ngModel)]="quantity" /></label>
+      <button (click)="addToCart()">Add to Cart</button>
+    </div>
+  </section>
+  <h3>Related Products</h3>
+  <div class="related">
+    <a *ngFor="let item of related" [routerLink]="['/products', item.id]">{{ item.name }}</a>
+  </div>
+</div>
