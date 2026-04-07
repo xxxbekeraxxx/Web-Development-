@@ -1,0 +1,20 @@
+<h1>Shopping Cart</h1>
+<div *ngIf="(items$ | async) as items">
+  <p *ngIf="!items.length">Your cart is empty.</p>
+  <div *ngFor="let item of items" class="item">
+    <div>
+      <strong>{{ item.product.name }}</strong>
+      <p>{{ item.product.price | currency }}</p>
+    </div>
+    <input type="number" [value]="item.quantity" min="1" (change)="cart.setQuantity(item.product.id, +$any($event.target).value)" />
+    <button (click)="cart.remove(item.product.id)">Remove</button>
+  </div>
+
+  <section *ngIf="items.length" class="totals">
+    <p>Subtotal: {{ cart.subtotal() | currency }}</p>
+    <p>Tax: {{ cart.tax() | currency }}</p>
+    <p>Shipping: {{ cart.shipping() | currency }}</p>
+    <p><strong>Total: {{ cart.total() | currency }}</strong></p>
+    <a routerLink="/checkout">Proceed to Checkout</a>
+  </section>
+</div>

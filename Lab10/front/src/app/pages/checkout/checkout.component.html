@@ -1,0 +1,16 @@
+<h1>Checkout</h1>
+<form [formGroup]="form" (ngSubmit)="placeOrder()" class="form">
+  <input formControlName="customer_name" placeholder="Full Name" />
+  <input formControlName="customer_email" placeholder="Email" />
+  <textarea formControlName="customer_address" placeholder="Shipping Address"></textarea>
+
+  <div class="summary">
+    <h3>Order Summary</h3>
+    <p *ngFor="let item of items">{{ item.product.name }} x {{ item.quantity }}</p>
+    <p>Subtotal: {{ cartService.subtotal() | currency }}</p>
+    <p>Total: {{ cartService.total() | currency }}</p>
+  </div>
+
+  <button type="submit" [disabled]="submitting || form.invalid">{{ submitting ? 'Placing...' : 'Place Order' }}</button>
+  <p>{{ successMessage }}</p>
+</form>

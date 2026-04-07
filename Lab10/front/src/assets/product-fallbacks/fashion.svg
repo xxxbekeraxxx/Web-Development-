@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420">
+  <rect width="640" height="420" fill="#3f1d2e"/>
+  <path d="M230 120 L275 80 L320 120 L365 80 L410 120 L385 280 L255 280 Z" fill="#f9a8d4"/>
+  <circle cx="320" cy="62" r="28" fill="#fde68a"/>
+  <text x="320" y="360" text-anchor="middle" fill="#ffe4e6" font-size="34" font-family="Arial">Fashion</text>
+</svg>

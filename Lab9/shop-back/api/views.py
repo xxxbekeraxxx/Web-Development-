@@ -7,7 +7,7 @@ from .serializers import CategorySerializer, ProductSerializer
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    pagination_class = None # Категории обычно грузят списком без пагинации
+    pagination_class = None 
 
     @action(detail=True, methods=['get'])
     def products(self, request, pk=None):
